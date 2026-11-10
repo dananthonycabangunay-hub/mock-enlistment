@@ -1,122 +1,145 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useRef, useState } from "react";
+import { PROGRAMS } from "./data/courses";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [screen, setScreen] = useState("landing");
+  const [programId, setProgramId] = useState(null);
+  const program = PROGRAMS.find((p) => p.id === programId);
+
+  if (screen === "main" && program) {
+    return <MainPage program={program} onBack={() => setScreen("landing")} />;
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, test</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <Landing
+      selectedId={programId}
+      onSelect={setProgramId}
+      onEnlist={() => setScreen("main")}
+    />
+  );
 }
 
-export default App
+function Landing({ selectedId, onSelect, onEnlist }) {
+  const [open, setOpen] = useState(false);
+  const pickerRef = useRef(null);
+  const selected = PROGRAMS.find((p) => p.id === selectedId);
+
+  // Close the menu when clicking outside it or pressing Escape.
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (e) => {
+      if (!pickerRef.current.contains(e.target)) setOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  const choose = (id) => {
+    onSelect(id);
+    setOpen(false);
+  };
+
+  return (
+    <main className="landing">
+      <div className="landing-content">
+        <h1 className="landing-title">Mock Enlistment!</h1>
+        <p className="landing-term">3Y 2S</p>
+
+        <div className="picker" ref={pickerRef}>
+          <button
+            type="button"
+            className="picker-trigger"
+            aria-expanded={open}
+            aria-controls="course-menu"
+            onClick={() => setOpen((o) => !o)}
+          >
+            <span>{selected ? selected.name : "Choose your course"}</span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+
+          {open && (
+            <ul className="picker-menu" id="course-menu">
+              {PROGRAMS.map((p) => (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    className="picker-option"
+                    aria-current={p.id === selectedId}
+                    onClick={() => choose(p.id)}
+                  >
+                    {p.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {selected && (
+          <button type="button" className="enlist" onClick={onEnlist}>
+            Enlist now
+          </button>
+        )}
+      </div>
+    </main>
+  );
+}
+
+// Temporary page: proves the course data loads. We replace this next.
+function MainPage({ program, onBack }) {
+  return (
+    <main className="main-page">
+      <header className="main-header">
+        <button type="button" className="back" onClick={onBack}>
+          Back
+        </button>
+        <div>
+          <h1 className="main-title">{program.name}</h1>
+          <p className="main-term">{program.term}</p>
+        </div>
+      </header>
+
+      <p className="placeholder-note">
+        Course data loaded. The section picker and schedule come next.
+      </p>
+
+      <ul className="subject-list">
+        {program.subjects.map((s) => (
+          <li key={s.code}>
+            <span className="subject-code">{s.code}</span>
+            <span className="subject-title">{s.title}</span>
+            <span className="subject-meta">
+              {s.fixed
+                ? "Fixed"
+                : s.sections.length > 0
+                  ? `${s.sections.length} sections`
+                  : "No slots yet"}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+}
