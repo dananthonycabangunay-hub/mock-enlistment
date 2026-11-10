@@ -17,6 +17,7 @@ import { CSS } from "@dnd-kit/utilities";
 import Schedule from "./Schedule";
 import { loadJSON, saveJSON } from "./lib/storage";
 import { saveScheduleImage } from "./lib/screenshot";
+import { makePairing, normalizePicks, selectionClash, selectionMembers } from "./lib/pairing";
 import {
   SUBJECT_COLORS,
   formatProfs,
@@ -25,18 +26,6 @@ import {
   shortCode,
   sortSections,
 } from "./lib/schedule";
-
-// Keep only saved picks that still exist in the data (in case sections change later).
-function cleanPicks(saved, subjects) {
-  const clean = {};
-  if (!saved || typeof saved !== "object") return clean;
-  for (const subject of subjects) {
-    if (subject.fixed) continue;
-    const id = saved[subject.code];
-    if (subject.sections.some((s) => s.id === id)) clean[subject.code] = id;
-  }
-  return clean;
-}
 
 // Saved tab order, minus subjects that no longer exist, plus any new ones at the end.
 function cleanOrder(saved, subjects) {
@@ -48,6 +37,7 @@ function cleanOrder(saved, subjects) {
 export default function MainPage({ program, onBack }) {
   const { subjects } = program;
   const storageKey = `mock-enlistment:v1:picks:${program.id}`;
+  const pairing = useMemo(() => makePairing(subjects), [subjects]);
 
   // Fixed subjects are always "picked" and never stored.
   const fixedPicks = useMemo(
@@ -61,7 +51,7 @@ export default function MainPage({ program, onBack }) {
   );
 
   const [picks, setPicks] = useState(() =>
-    cleanPicks(loadJSON(storageKey, {}).picks, subjects)
+    normalizePicks(loadJSON(storageKey, {}).picks, subjects, pairing, sectionsOverlap)
   );
   const [order, setOrder] = useState(() =>
     cleanOrder(loadJSON(storageKey, {}).order, subjects)
@@ -92,25 +82,33 @@ export default function MainPage({ program, onBack }) {
 
   const active = subjects.find((s) => s.code === activeCode);
 
-  // Open sections first, then the ones that overlap a pick from another subject.
-  const rows = useMemo(() => {
-    const others = chosen.filter((c) => c.subject.code !== active.code);
-    const all = sortSections(active.sections).map((section) => {
-      const clash = others.find((c) => sectionsOverlap(section, c.section));
-      return {
-        section,
-        clash: clash ? `${shortCode(clash.subject.code)} ${clash.section.section}` : null,
-      };
-    });
-    return [...all.filter((r) => !r.clash), ...all.filter((r) => r.clash)];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, picks]);
+  // Check a paired section and its counterpart together before allowing a pick.
+  const allRows = sortSections(active.sections).map((section) => {
+    const members = selectionMembers(active, section, pairing);
+    if (!members) return { section, clash: "Paired section is unavailable" };
+    const overlap = selectionClash(members, chosen, sectionsOverlap);
+    if (!overlap) return { section, clash: null };
+    const { member, conflict } = overlap;
+    const through = member.section.id === section.id
+      ? ""
+      : ` (through ${shortCode(member.subject.code)} ${member.section.section})`;
+    return {
+      section,
+      clash: `Overlaps with ${shortCode(conflict.subject.code)} ${conflict.section.section}${through}`,
+    };
+  });
+  const rows = [...allRows.filter((row) => !row.clash), ...allRows.filter((row) => row.clash)];
 
-  const togglePick = (subjectCode, sectionId) => {
+  const togglePick = (subject, section) => {
+    const members = selectionMembers(subject, section, pairing);
+    if (!members) return;
     setPicks((prev) => {
       const next = { ...prev };
-      if (next[subjectCode] === sectionId) delete next[subjectCode];
-      else next[subjectCode] = sectionId;
+      if (next[subject.code] === section.id) {
+        for (const member of members) delete next[member.subject.code];
+      } else {
+        for (const member of members) next[member.subject.code] = member.section.id;
+      }
       return next;
     });
   };
@@ -200,7 +198,7 @@ export default function MainPage({ program, onBack }) {
                   section={section}
                   clash={clash}
                   isChosen={allPicks[active.code] === section.id}
-                  onPick={() => togglePick(active.code, section.id)}
+                  onPick={() => togglePick(active, section)}
                 />
               </li>
             ))}
@@ -280,7 +278,7 @@ function SectionCard({ subject, section, clash, isChosen, onPick }) {
         {section.note && <span className="card-line">{section.note}</span>}
       </span>
       {badge && <span className="card-badge">{badge}</span>}
-      {clash && <span className="card-clash">Overlaps with {clash}</span>}
+      {clash && <span className="card-clash">{clash}</span>}
     </>
   );
 

@@ -40,12 +40,6 @@ export const PROGRAMS = [
         ],
       },
       {
-        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: false,
-        sections: [
-          {"id": "NSTP12CWTS-N-SPM2", "section": "N-SPM2", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["TBA"]},
-        ],
-      },
-      {
         code: "PHILO 13", title: "Ethics", units: 3, fixed: false,
         sections: [
           {"id": "PHILO13-A", "section": "A", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "BEL-308", "profs": ["BARBAZA, REMMON E."]},
@@ -84,12 +78,6 @@ export const PROGRAMS = [
           {"id": "PHILO13-Q3", "section": "Q3", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "G-204", "profs": ["OPINIANO, Gina"]},
           {"id": "PHILO13-Q4", "section": "Q4", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 303", "profs": ["HERNANDEZ, Carl Jayson"]},
           {"id": "PHILO13-Q5", "section": "Q5", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "SEC-A123", "profs": ["ADVINCULA, Jasmin"]},
-        ],
-      },
-      {
-        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: true,
-        sections: [
-          {"id": "SocSc13-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-309", "profs": ["MAGNO, NOTA F."]},
         ],
       },
       {
@@ -133,6 +121,20 @@ export const PROGRAMS = [
           {"id": "THEO13-WX1A", "section": "WX1A", "days": ["Wed"], "start": "14:00", "end": "17:00", "room": "K-302", "profs": ["ROSAL, LESLEY ANNE A."]},
         ],
       },
+            {
+        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: false,
+        sections: [
+          {"id": "SocSc13-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-309", "profs": ["MAGNO, NOTA F."]},
+          {"id": "SocSc13-G", "section": "G", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "F-113", "profs": ["GALANG, Jericho"]},
+        ],
+      },
+      {
+        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: false,
+        sections: [
+          {"id": "NSTP12CWTS-N-SPM2", "section": "N-SPM2", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["TBA"], "requires": "SocSc13-B"},
+          {"id": "NSTP12CWTS-N-SPM1", "section": "N-SPM1", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["ARPILLEDA, Ericka"], "requires": "SocSc13-G"},
+        ],
+      },
     ],
   },
   {
@@ -173,12 +175,6 @@ export const PROGRAMS = [
         ],
       },
       {
-        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: true,
-        sections: [
-          {"id": "SocSc13-L1", "section": "L1", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "SOM 103", "profs": ["MORA, Rainier Gerald"]},
-        ],
-      },
-      {
         code: "FAA 111.10", title: "Financial Management for Decision Makers", units: 3, fixed: false,
         sections: [
           {"id": "FAA11110-Q", "section": "Q", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 406", "profs": ["WONG, MARVIC DALE A."]},
@@ -215,9 +211,21 @@ export const PROGRAMS = [
         ],
       },
       {
-        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: true,
+        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: false,
         sections: [
-          {"id": "NSTP12CWTS-N-SPM10", "section": "N-SPM10", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["SAZON, Keith Xavier"]},
+          {"id": "SocSc13-C", "section": "C", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "F-113", "profs": ["CLAVERIA-DELOS REYES, Jeannette Nina"]},
+          {"id": "SocSc13-D1", "section": "D1", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "B-106", "profs": ["CARIÑO, Manuel Miguel"]},
+          {"id": "SocSc13-K1", "section": "K1", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "CTC 307", "profs": ["RAMOS, Marvee Anne"]},
+          {"id": "SocSc13-L1", "section": "L1", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "SOM 103", "profs": ["MORA, Rainier Gerald"]},
+        ],
+      },
+      {
+        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: false,
+        sections: [
+          {"id": "NSTP12CWTS-N-WAM5", "section": "N-WAM5", "days": ["Wed"], "start": "08:00", "end": "12:00", "room": "TBA", "profs": ["TBA"], "requires": "SocSc13-C"},
+          {"id": "NSTP12CWTS-N-WAM6", "section": "N-WAM6", "days": ["Wed"], "start": "08:00", "end": "12:00", "room": "TBA", "profs": ["TBA"], "requires": "SocSc13-D1"},
+          {"id": "NSTP12CWTS-N-SPM9", "section": "N-SPM9", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["TBA"], "requires": "SocSc13-K1"},
+          {"id": "NSTP12CWTS-N-SPM10", "section": "N-SPM10", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["SAZON, Keith Xavier"], "requires": "SocSc13-L1"},
         ],
       },
     ],
