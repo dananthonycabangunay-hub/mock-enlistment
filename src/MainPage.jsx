@@ -1,7 +1,24 @@
 import { useEffect, useMemo, useState } from "react";
-import { surnames } from "./data/courses";
-import { loadJSON, saveJSON } from "./lib/storage";
 import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import Schedule from "./Schedule";
+import { loadJSON, saveJSON } from "./lib/storage";
+import { saveScheduleImage } from "./lib/screenshot";
+import {
+  SUBJECT_COLORS,
   formatProfs,
   formatTimeRange,
   sectionsOverlap,
@@ -19,6 +36,13 @@ function cleanPicks(saved, subjects) {
     if (subject.sections.some((s) => s.id === id)) clean[subject.code] = id;
   }
   return clean;
+}
+
+// Saved tab order, minus subjects that no longer exist, plus any new ones at the end.
+function cleanOrder(saved, subjects) {
+  const codes = subjects.map((s) => s.code);
+  const kept = Array.isArray(saved) ? saved.filter((c) => codes.includes(c)) : [];
+  return [...kept, ...codes.filter((c) => !kept.includes(c))];
 }
 
 export default function MainPage({ program, onBack }) {
@@ -39,24 +63,31 @@ export default function MainPage({ program, onBack }) {
   const [picks, setPicks] = useState(() =>
     cleanPicks(loadJSON(storageKey, {}).picks, subjects)
   );
+  const [order, setOrder] = useState(() =>
+    cleanOrder(loadJSON(storageKey, {}).order, subjects)
+  );
   const [activeCode, setActiveCode] = useState(
     () => (subjects.find((s) => !s.fixed && s.sections.length > 0) ?? subjects[0]).code
   );
 
   useEffect(() => {
-    saveJSON(storageKey, { picks });
-  }, [storageKey, picks]);
+    saveJSON(storageKey, { picks, order });
+  }, [storageKey, picks, order]);
 
   const allPicks = { ...picks, ...fixedPicks };
 
-  // [{ subject, section }] for every subject that has a section picked.
-  const chosen = subjects.flatMap((subject) => {
+  // [{ subject, section, color }] for every subject that has a section picked.
+  // Colors follow the curriculum position, so they stay put when tabs are reordered.
+  const chosen = subjects.flatMap((subject, i) => {
     const section = subject.sections.find((s) => s.id === allPicks[subject.code]);
-    return section ? [{ subject, section }] : [];
+    return section
+      ? [{ subject, section, color: SUBJECT_COLORS[i % SUBJECT_COLORS.length] }]
+      : [];
   });
 
   const enrollable = subjects.filter((s) => s.sections.length > 0);
   const filledCount = enrollable.filter((s) => allPicks[s.code]).length;
+  const complete = filledCount === enrollable.length;
   const totalUnits = chosen.reduce((sum, c) => sum + c.subject.units, 0);
 
   const active = subjects.find((s) => s.code === activeCode);
@@ -82,6 +113,27 @@ export default function MainPage({ program, onBack }) {
       else next[subjectCode] = sectionId;
       return next;
     });
+  };
+
+  // Mouse drags after moving 6px (so plain clicks still select); touch needs a short press
+  // so scrolling the page with a finger doesn't grab a tab.
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } })
+  );
+
+  const onDragEnd = ({ active: a, over }) => {
+    if (over && a.id !== over.id) {
+      setOrder((o) => arrayMove(o, o.indexOf(a.id), o.indexOf(over.id)));
+    }
+  };
+
+  const saveImage = async () => {
+    try {
+      await saveScheduleImage({ program, entries: chosen, units: totalUnits });
+    } catch {
+      alert("Couldn't save the image. Please try again.");
+    }
   };
 
   return (
@@ -111,28 +163,25 @@ export default function MainPage({ program, onBack }) {
           </div>
         </dl>
 
-        <div className="tabs">
-          {subjects.map((s) => {
-            const filled = Boolean(allPicks[s.code]);
-            const empty = s.sections.length === 0;
-            const cls = ["tab", filled && "is-filled", empty && "is-empty"]
-              .filter(Boolean)
-              .join(" ");
-            return (
-              <button
-                key={s.code}
-                type="button"
-                className={cls}
-                aria-current={s.code === activeCode}
-                title={s.title}
-                onClick={() => setActiveCode(s.code)}
-              >
-                <span>{shortCode(s.code)}</span>
-                {filled && <CheckIcon />}
-              </button>
-            );
-          })}
-        </div>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+          <SortableContext items={order} strategy={rectSortingStrategy}>
+            <div className="tabs">
+              {order.map((code) => {
+                const s = subjects.find((x) => x.code === code);
+                return (
+                  <SortableTab
+                    key={code}
+                    subject={s}
+                    filled={Boolean(allPicks[code])}
+                    empty={s.sections.length === 0}
+                    isActive={code === activeCode}
+                    onSelect={() => setActiveCode(code)}
+                  />
+                );
+              })}
+            </div>
+          </SortableContext>
+        </DndContext>
 
         <p className="active-title">
           {active.title} ({active.units} {active.units === 1 ? "unit" : "units"})
@@ -159,44 +208,21 @@ export default function MainPage({ program, onBack }) {
         )}
       </section>
 
-      {/* ---------- Right: schedule summary (grid comes in the next step) ---------- */}
+      {/* ---------- Right: schedule summary ---------- */}
       <section className="panel summary-panel" aria-label="Schedule summary">
         <h2 className="summary-title">Schedule summary</h2>
-        <p className="summary-note">
-          The weekly grid is coming next. For now, here are your picks.
-        </p>
 
-        <ul className="pick-list">
-          {subjects.map((subject) => {
-            const entry = chosen.find((c) => c.subject.code === subject.code);
-            return (
-              <li key={subject.code} className={entry ? "pick" : "pick is-open"}>
-                <button
-                  type="button"
-                  className="pick-head"
-                  onClick={() => setActiveCode(subject.code)}
-                >
-                  <span className="pick-code">{subject.code}</span>
-                  <span className="pick-units">
-                    {subject.units} {subject.units === 1 ? "unit" : "units"}
-                  </span>
-                </button>
-                {entry ? (
-                  <p className="pick-detail">
-                    Section {entry.section.section}, {entry.section.days.join(" ")}{" "}
-                    {formatTimeRange(entry.section.start, entry.section.end)}
-                    <br />
-                    {entry.section.room}, {surnames(entry.section).join(" & ")}
-                  </p>
-                ) : (
-                  <p className="pick-detail">
-                    {subject.sections.length > 0 ? "Not chosen yet" : "No slots yet"}
-                  </p>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <Schedule entries={chosen} onSelect={setActiveCode} />
+
+        <button
+          type="button"
+          className="shot-btn"
+          disabled={!complete}
+          title={complete ? undefined : "Choose a section for every subject first"}
+          onClick={saveImage}
+        >
+          Take a screenshot of your schedule
+        </button>
 
         {Object.keys(picks).length > 0 && (
           <button type="button" className="link-button" onClick={() => setPicks({})}>
@@ -205,6 +231,32 @@ export default function MainPage({ program, onBack }) {
         )}
       </section>
     </main>
+  );
+}
+
+function SortableTab({ subject, filled, empty, isActive, onSelect }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: subject.code });
+
+  const cls = ["tab", filled && "is-filled", empty && "is-empty", isDragging && "is-dragging"]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <button
+      ref={setNodeRef}
+      type="button"
+      className={cls}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      aria-current={isActive}
+      title={subject.title}
+      onClick={onSelect}
+      {...attributes}
+      {...listeners}
+    >
+      <span>{shortCode(subject.code)}</span>
+      {filled && <CheckIcon />}
+    </button>
   );
 }
 

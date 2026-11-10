@@ -481,3 +481,106 @@
     transition: none;
   }
 }
+
+/* ---------- Chunk B: draggable tabs, weekly grid, screenshot button ---------- */
+
+/* Tabs: stop long-press from selecting text or opening the iOS menu while dragging. */
+.tab {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.tab.is-dragging {
+  z-index: 3;
+  cursor: grabbing;
+  box-shadow: 0 6px 16px rgb(19 29 82 / 0.25);
+}
+
+/* Weekly grid: scrolls sideways on phones. */
+.cal-scroll {
+  overflow-x: auto;
+}
+
+.cal {
+  --row-h: 1.6rem;
+  display: grid;
+  grid-template-columns: 2.75rem repeat(6, minmax(5.5rem, 1fr));
+  min-width: 38rem;
+}
+
+.cal-day {
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.cal-time {
+  grid-column: 1;
+  padding: 2px 6px 0 0;
+  text-align: right;
+  font-size: 0.6875rem;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+
+/* One element draws every grid line, instead of 156 cells. */
+.cal-lines {
+  grid-column: 2 / -1;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 100% var(--row-h), calc(100% / 6) 100%;
+  border-right: 1px solid var(--grid);
+  border-bottom: 1px solid var(--grid);
+}
+
+.cal-block {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1px;
+  padding: 3px 5px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: 0.6875rem;
+  line-height: 1.25;
+  text-align: left;
+  color: var(--ink-deep);
+  border: 1px solid rgb(29 43 111 / 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cal-code {
+  font-weight: 700;
+}
+
+/* Screenshot button: faded until every subject is chosen, then green. */
+.shot-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--white);
+  background: #1f8a4c;
+  border: 2px solid #1f8a4c;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.shot-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.shot-btn:hover:not(:disabled) {
+  background: #17703c;
+  border-color: #17703c;
+}
