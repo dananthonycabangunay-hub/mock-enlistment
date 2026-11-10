@@ -151,24 +151,23 @@ export default function MainPage({ program, onBack }) {
           <button type="button" className="back" onClick={onBack}>
             Back
           </button>
-          <div>
+          <div className="course-heading">
             <h1 className="main-title">{program.name}</h1>
             <p className="main-term">{program.term}</p>
           </div>
+          <dl className="stats">
+            <div>
+              <dt>Units</dt>
+              <dd>{totalUnits}</dd>
+            </div>
+            <div>
+              <dt>Subjects</dt>
+              <dd>
+                {filledCount} of {enrollable.length}
+              </dd>
+            </div>
+          </dl>
         </header>
-
-        <dl className="stats">
-          <div>
-            <dt>Units</dt>
-            <dd>{totalUnits}</dd>
-          </div>
-          <div>
-            <dt>Subjects</dt>
-            <dd>
-              {filledCount} of {enrollable.length}
-            </dd>
-          </div>
-        </dl>
 
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
           <SortableContext items={order} strategy={rectSortingStrategy}>
