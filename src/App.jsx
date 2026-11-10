@@ -1,14 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { PROGRAMS } from "./data/courses";
+import { loadJSON, saveJSON } from "./lib/storage";
+import MainPage from "./MainPage";
 import "./App.css";
 
+const APP_KEY = "mock-enlistment:v1:app";
+
 export default function App() {
-  const [screen, setScreen] = useState("landing");
-  const [programId, setProgramId] = useState(null);
+  // Remember the screen and course so a refresh keeps you where you were.
+  const [screen, setScreen] = useState(() => loadJSON(APP_KEY, {}).screen ?? "landing");
+  const [programId, setProgramId] = useState(() => loadJSON(APP_KEY, {}).programId ?? null);
   const program = PROGRAMS.find((p) => p.id === programId);
 
+  useEffect(() => {
+    saveJSON(APP_KEY, { screen, programId });
+  }, [screen, programId]);
+
   if (screen === "main" && program) {
-    return <MainPage program={program} onBack={() => setScreen("landing")} />;
+    return (
+      <MainPage
+        key={program.id}
+        program={program}
+        onBack={() => setScreen("landing")}
+      />
+    );
   }
 
   return (
@@ -103,43 +118,6 @@ function Landing({ selectedId, onSelect, onEnlist }) {
           </button>
         )}
       </div>
-    </main>
-  );
-}
-
-// Temporary page: proves the course data loads. We replace this next.
-function MainPage({ program, onBack }) {
-  return (
-    <main className="main-page">
-      <header className="main-header">
-        <button type="button" className="back" onClick={onBack}>
-          Back
-        </button>
-        <div>
-          <h1 className="main-title">{program.name}</h1>
-          <p className="main-term">{program.term}</p>
-        </div>
-      </header>
-
-      <p className="placeholder-note">
-        Course data loaded. The section picker and schedule come next.
-      </p>
-
-      <ul className="subject-list">
-        {program.subjects.map((s) => (
-          <li key={s.code}>
-            <span className="subject-code">{s.code}</span>
-            <span className="subject-title">{s.title}</span>
-            <span className="subject-meta">
-              {s.fixed
-                ? "Fixed"
-                : s.sections.length > 0
-                  ? `${s.sections.length} sections`
-                  : "No slots yet"}
-            </span>
-          </li>
-        ))}
-      </ul>
     </main>
   );
 }
