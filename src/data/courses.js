@@ -1,0 +1,229 @@
+// Course data for Mock Enlistment (3Y 2S).
+// Days: Mon Tue Wed Thu Fri Sat. Times are 24-hour "HH:MM".
+// "fixed: true" subjects are pre-assigned and are auto-placed on the schedule (no choosing).
+// A subject with an empty sections list has no slots yet; the app should not block completion on it.
+
+export const PROGRAMS = [
+  {
+    id: "amdsc", name: "BS AMDSc", term: "3Y 2S",
+    subjects: [
+      {
+        code: "CSCI 113i", title: "Business Intelligence", units: 3, fixed: false,
+        sections: [
+          {"id": "CSCI113i-A", "section": "A", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "F-204", "profs": ["NAVARRO, ANDREI M."]},
+          {"id": "CSCI113i-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "F-204", "profs": ["NAVARRO, ANDREI M."], "note": "For non-DISCS IE takers"},
+          {"id": "CSCI113i-J", "section": "J", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "F-204", "profs": ["CAJUCOM, Luis Gabriel"]},
+          {"id": "CSCI113i-K", "section": "K", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "F-204", "profs": ["CAJUCOM, Luis Gabriel"]},
+          {"id": "CSCI113i-M", "section": "M", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "CTC 112", "profs": ["DE VERA, JOSE ALFREDO III A."]},
+          {"id": "CSCI113i-ST2A", "section": "ST2A", "days": ["Sat"], "start": "08:00", "end": "11:00", "room": "F-228", "profs": ["ESCUETA, Niño Danielle"]},
+          {"id": "CSCI113i-YW", "section": "YW", "days": ["Wed"], "start": "17:00", "end": "20:00", "room": "CTC 201C", "profs": ["ANGELES, Miguelito Moses"], "note": "For non-DISCS IE takers only"},
+        ],
+      },
+      {
+        code: "MATH 192", title: "Undergraduate Research Seminar", units: 1, fixed: false,
+        sections: [], // no slots yet
+      },
+      {
+        code: "MATH 62.2", title: "Time Series and Forecasting", units: 3, fixed: false,
+        sections: [
+          {"id": "MATH622-D", "section": "D", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "SEC-A304A", "profs": ["BATALLER, RAMIL T."]},
+          {"id": "MATH622-E", "section": "E", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "SEC-A304A", "profs": ["BRIONES, JERIC C."]},
+          {"id": "MATH622-F", "section": "F", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "SEC-A304A", "profs": ["BRIONES, JERIC C."]},
+        ],
+      },
+      {
+        code: "MATH 72.1", title: "Ordinary Differential Equations", units: 3, fixed: false,
+        sections: [
+          {"id": "MATH721-K", "section": "K", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "SEC-A302A", "profs": ["MIRO, EDEN DELIGHT P.", "SILVESTRE, Luis Jr"]},
+          {"id": "MATH721-L", "section": "L", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "SEC-A302A", "profs": ["MIRO, EDEN DELIGHT P.", "SILVESTRE, Luis Jr"]},
+          {"id": "MATH721-N", "section": "N", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "SEC-A304A", "profs": ["SILVESTRE, Luis Jr"]},
+        ],
+      },
+      {
+        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: false,
+        sections: [
+          {"id": "NSTP12CWTS-N-SPM2", "section": "N-SPM2", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["TBA"]},
+        ],
+      },
+      {
+        code: "PHILO 13", title: "Ethics", units: 3, fixed: false,
+        sections: [
+          {"id": "PHILO13-A", "section": "A", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "BEL-308", "profs": ["BARBAZA, REMMON E."]},
+          {"id": "PHILO13-B1", "section": "B1", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "CTC 118", "profs": ["QUE, SJ, FR. NEMESIO S."]},
+          {"id": "PHILO13-B2", "section": "B2", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-308", "profs": ["BARBAZA, REMMON E."]},
+          {"id": "PHILO13-D", "section": "D", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "CTC 202", "profs": ["AVECILLA, ANAMARIE R."]},
+          {"id": "PHILO13-E1", "section": "E1", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "CTC 202", "profs": ["ANGELES, ANTONETTE P."]},
+          {"id": "PHILO13-E2", "section": "E2", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "CTC 101", "profs": ["AVECILLA, ANAMARIE R."]},
+          {"id": "PHILO13-E3", "section": "E3", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "BEL-206", "profs": ["BARBAZA, REMMON E."]},
+          {"id": "PHILO13-F1", "section": "F1", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "CTC 202", "profs": ["ANGELES, ANTONETTE P."]},
+          {"id": "PHILO13-G1", "section": "G1", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "CTC 202", "profs": ["AVECILLA, ANAMARIE R."]},
+          {"id": "PHILO13-G2", "section": "G2", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "BEL-308", "profs": ["LAGDAMEO, Federico Jose"]},
+          {"id": "PHILO13-G3", "section": "G3", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "B-204/B-205", "profs": ["BARTILET, Jeffrey"]},
+          {"id": "PHILO13-H1", "section": "H1", "days": ["Mon", "Thu"], "start": "18:30", "end": "20:00", "room": "CTC 303", "profs": ["AVECILLA, ANAMARIE R."]},
+          {"id": "PHILO13-H3", "section": "H3", "days": ["Mon", "Thu"], "start": "18:30", "end": "20:00", "room": "B-204/B-205", "profs": ["BARTILET, Jeffrey"]},
+          {"id": "PHILO13-H4", "section": "H4", "days": ["Mon", "Thu"], "start": "18:30", "end": "20:00", "room": "BEL-308", "profs": ["LAGDAMEO, Federico Jose"]},
+          {"id": "PHILO13-J", "section": "J", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "B-307", "profs": ["FESTIN, Vincent Edward"]},
+          {"id": "PHILO13-J1", "section": "J1", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "CTC 202", "profs": ["HERMIDA, RANILO B."]},
+          {"id": "PHILO13-J2", "section": "J2", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "BEL-308", "profs": ["TEMPORAL, DENNIS O."]},
+          {"id": "PHILO13-K1", "section": "K1", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "FA ANNEX 106", "profs": ["OPINIANO, Gina"]},
+          {"id": "PHILO13-L1", "section": "L1", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "FA ANNEX 106", "profs": ["OPINIANO, Gina"]},
+          {"id": "PHILO13-L2", "section": "L2", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "G-204", "profs": ["HERNANDEZ, Carl Jayson"]},
+          {"id": "PHILO13-M1", "section": "M1", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "G-204", "profs": ["OPINIANO, Gina"]},
+          {"id": "PHILO13-M2", "section": "M2", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "SEC-A123", "profs": ["HERNANDEZ, Carl Jayson"]},
+          {"id": "PHILO13-M3", "section": "M3", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "BEL-206", "profs": ["ADVINCULA, Jasmin"]},
+          {"id": "PHILO13-M4", "section": "M4", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "BEL-103B", "profs": ["TEMPORAL, DENNIS O."]},
+          {"id": "PHILO13-N1", "section": "N1", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "SOM 203", "profs": ["RAFTERY-SKEHAN, MARK MICHAEL JO"]},
+          {"id": "PHILO13-N2", "section": "N2", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "SEC-C201A", "profs": ["GARCIA, LEOVINO MA. M."]},
+          {"id": "PHILO13-N3", "section": "N3", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "BEL-103B", "profs": ["CASLIB, BERNARDO JR. N."]},
+          {"id": "PHILO13-N4", "section": "N4", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "BEL-206", "profs": ["ADVINCULA, Jasmin"]},
+          {"id": "PHILO13-O1", "section": "O1", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "BEL-103B", "profs": ["CASLIB, BERNARDO JR. N."]},
+          {"id": "PHILO13-O2", "section": "O2", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "SEC-A123", "profs": ["HERNANDEZ, Carl Jayson"]},
+          {"id": "PHILO13-O3", "section": "O3", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "SOM 111", "profs": ["RAFTERY-SKEHAN, MARK MICHAEL JO"]},
+          {"id": "PHILO13-Q1", "section": "Q1", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 202", "profs": ["PIAMONTE, Chloe Nicole"]},
+          {"id": "PHILO13-Q2", "section": "Q2", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "BEL-308", "profs": ["LAGDAMEO, Federico Jose"]},
+          {"id": "PHILO13-Q3", "section": "Q3", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "G-204", "profs": ["OPINIANO, Gina"]},
+          {"id": "PHILO13-Q4", "section": "Q4", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 303", "profs": ["HERNANDEZ, Carl Jayson"]},
+          {"id": "PHILO13-Q5", "section": "Q5", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "SEC-A123", "profs": ["ADVINCULA, Jasmin"]},
+        ],
+      },
+      {
+        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: true,
+        sections: [
+          {"id": "SocSc13-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-309", "profs": ["MAGNO, NOTA F."]},
+        ],
+      },
+      {
+        code: "THEO 13", title: "A Theology of Marriage, Family, and Vocation", units: 3, fixed: false,
+        sections: [
+          {"id": "THEO13-A", "section": "A", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "BEL-213", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-A1", "section": "A1", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "BEL-102", "profs": ["MENDOZA, RUBEN C."], "note": "Medium of instruction: English & Filipino"},
+          {"id": "THEO13-A2", "section": "A2", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "K-303", "profs": ["ODULIO, EDWIN B."]},
+          {"id": "THEO13-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "CTC 408", "profs": ["BORJA, MARIA ELISA A."]},
+          {"id": "THEO13-B1", "section": "B1", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-213", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-B2", "section": "B2", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-102", "profs": ["MENDOZA, RUBEN C."], "note": "Medium of instruction: English & Filipino"},
+          {"id": "THEO13-B3", "section": "B3", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "K-303", "profs": ["ODULIO, EDWIN B."]},
+          {"id": "THEO13-C", "section": "C", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "CTC 408", "profs": ["BORJA, MARIA ELISA A."]},
+          {"id": "THEO13-C1", "section": "C1", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "SOM 111", "profs": ["DACANAY, SJ, FR. ADOLFO N."]},
+          {"id": "THEO13-D", "section": "D", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "K-303", "profs": ["DAGMANG, FERDINAND D."]},
+          {"id": "THEO13-D1", "section": "D1", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "CTC 304", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-D2", "section": "D2", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "G-206", "profs": ["SANCHEZ, Frederick"]},
+          {"id": "THEO13-E", "section": "E", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "CTC 408", "profs": ["BORJA, MARIA ELISA A."]},
+          {"id": "THEO13-E1", "section": "E1", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "K-303", "profs": ["DAGMANG, FERDINAND D."]},
+          {"id": "THEO13-F", "section": "F", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "CTC 408", "profs": ["BORJA, MARIA ELISA A."]},
+          {"id": "THEO13-F1", "section": "F1", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "K-303", "profs": ["DAGMANG, FERDINAND D."]},
+          {"id": "THEO13-F2", "section": "F2", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "SOM 111", "profs": ["SANCHEZ, Frederick"]},
+          {"id": "THEO13-F3", "section": "F3", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "SEC-C201A", "profs": ["MENDOZA, RUBEN C."], "note": "Medium of instruction: English & Filipino"},
+          {"id": "THEO13-G", "section": "G", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "CTC 408", "profs": ["SANCHEZ, Frederick"]},
+          {"id": "THEO13-J", "section": "J", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "BEL-213", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-J1", "section": "J1", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "CTC 203", "profs": ["ODULIO, EDWIN B."]},
+          {"id": "THEO13-J2", "section": "J2", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "K-303", "profs": ["ANCHETA, Rica"]},
+          {"id": "THEO13-K1", "section": "K1", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "BEL-213", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-L", "section": "L", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "BEL-213", "profs": ["REYES, JOSEMARIA ROBERTO V."]},
+          {"id": "THEO13-M", "section": "M", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "G-206", "profs": ["JOHNSON, JOSEPH B."]},
+          {"id": "THEO13-M1", "section": "M1", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "BEL-213", "profs": ["REYES, JOSEMARIA ROBERTO V."]},
+          {"id": "THEO13-M2", "section": "M2", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "BEL-102", "profs": ["YABUT, RAPHAEL AGUSTINE L."]},
+          {"id": "THEO13-M3", "section": "M3", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "FA ANNEX 106", "profs": ["ANCHETA, Rica"]},
+          {"id": "THEO13-N", "section": "N", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "FA ANNEX 106", "profs": ["ANCHETA, Rica"]},
+          {"id": "THEO13-O", "section": "O", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "BEL-212", "profs": ["ROSAL, LESLEY ANNE A."]},
+          {"id": "THEO13-O1", "section": "O1", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "F-115", "profs": ["YABUT, RAPHAEL AGUSTINE L."]},
+          {"id": "THEO13-ST1", "section": "ST1", "days": ["Wed"], "start": "08:00", "end": "11:00", "room": "SOM 103", "profs": ["ASENETA, Anatoly Angelo"]},
+          {"id": "THEO13-ST1A", "section": "ST1A", "days": ["Wed"], "start": "08:00", "end": "11:00", "room": "K-302", "profs": ["ROSAL, LESLEY ANNE A."]},
+          {"id": "THEO13-ST1B", "section": "ST1B", "days": ["Wed"], "start": "08:00", "end": "11:00", "room": "K-204", "profs": ["ODULIO, EDWIN B."]},
+          {"id": "THEO13-WX1", "section": "WX1", "days": ["Wed"], "start": "14:00", "end": "17:00", "room": "SOM 302", "profs": ["ASENETA, Anatoly Angelo"]},
+          {"id": "THEO13-WX1A", "section": "WX1A", "days": ["Wed"], "start": "14:00", "end": "17:00", "room": "K-302", "profs": ["ROSAL, LESLEY ANNE A."]},
+        ],
+      },
+    ],
+  },
+  {
+    id: "me", name: "BS ME", term: "3Y 2S",
+    subjects: [
+      {
+        code: "PHILO 12", title: "Philosophy of Religion", units: 3, fixed: false,
+        sections: [
+          {"id": "PHILO12-A1", "section": "A1", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "SOM 202", "profs": ["LISMORAS, Reynald"]},
+          {"id": "PHILO12-A2", "section": "A2", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "BEL-206", "profs": ["STREBEL, WILHELM PATRICK J. S."]},
+          {"id": "PHILO12-B1", "section": "B1", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "FA ANNEX 101", "profs": ["STA. MARIA, JOSEPH EMMANUEL D."]},
+          {"id": "PHILO12-B3", "section": "B3", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "BEL-206", "profs": ["STREBEL, WILHELM PATRICK J. S."]},
+          {"id": "PHILO12-B4", "section": "B4", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "SOM 111", "profs": ["LISMORAS, Reynald"]},
+          {"id": "PHILO12-C1", "section": "C1", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "CTC 105", "profs": ["ADRIATICO, Wilzel"]},
+          {"id": "PHILO12-C2", "section": "C2", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "FA ANNEX 101", "profs": ["STA. MARIA, JOSEPH EMMANUEL D."]},
+          {"id": "PHILO12-D1", "section": "D1", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "CTC 102", "profs": ["ADRIATICO, Wilzel"]},
+          {"id": "PHILO12-F", "section": "F", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "K-204", "profs": ["ADRIATICO, Wilzel"]},
+          {"id": "PHILO12-F1", "section": "F1", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "SEC-A202", "profs": ["AURELIO, MICHAEL STEPHEN G."]},
+          {"id": "PHILO12-F2", "section": "F2", "days": ["Mon", "Thu"], "start": "15:30", "end": "17:00", "room": "BEL-103B", "profs": ["MASONG, KENNETH C."]},
+          {"id": "PHILO12-G1", "section": "G1", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "BEL-103B", "profs": ["MASONG, KENNETH C."]},
+          {"id": "PHILO12-G2", "section": "G2", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "SEC-A123", "profs": ["AURELIO, MICHAEL STEPHEN G."]},
+          {"id": "PHILO12-G3", "section": "G3", "days": ["Mon", "Thu"], "start": "17:00", "end": "18:30", "room": "BEL-206", "profs": ["LISMORAS, Reynald"]},
+          {"id": "PHILO12-H", "section": "H", "days": ["Mon", "Thu"], "start": "18:30", "end": "20:00", "room": "BEL-206", "profs": ["LISMORAS, Reynald"]},
+          {"id": "PHILO12-J1", "section": "J1", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "BEL-103B", "profs": ["LAGLIVA, ALBERT M."]},
+          {"id": "PHILO12-J2", "section": "J2", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "G-204", "profs": ["TOLENTINO, ROY ALLAN B."]},
+          {"id": "PHILO12-J3", "section": "J3", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "CTC 303", "profs": ["MIROY, JOVINO G."]},
+          {"id": "PHILO12-J4", "section": "J4", "days": ["Tue", "Fri"], "start": "08:00", "end": "09:30", "room": "BEL-206", "profs": ["STREBEL, WILHELM PATRICK J. S."]},
+          {"id": "PHILO12-K1", "section": "K1", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "BEL-103B", "profs": ["LAGLIVA, ALBERT M."]},
+          {"id": "PHILO12-K2", "section": "K2", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "G-204", "profs": ["TOLENTINO, ROY ALLAN B."]},
+          {"id": "PHILO12-K4", "section": "K4", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "BEL-206", "profs": ["STREBEL, WILHELM PATRICK J. S."]},
+          {"id": "PHILO12-K5", "section": "K5", "days": ["Tue", "Fri"], "start": "09:30", "end": "11:00", "room": "BEL-308", "profs": ["STA. MARIA, JOSEPH EMMANUEL D."]},
+          {"id": "PHILO12-L1", "section": "L1", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "BEL-206", "profs": ["STA. MARIA, JOSEPH EMMANUEL D."]},
+          {"id": "PHILO12-L2", "section": "L2", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "BEL-103B", "profs": ["LAGLIVA, ALBERT M."]},
+          {"id": "PHILO12-M1", "section": "M1", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "CTC 303", "profs": ["MIROY, JOVINO G."]},
+          {"id": "PHILO12-N", "section": "N", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "SEC-A123", "profs": ["STREBEL, WILHELM PATRICK J. S."]},
+          {"id": "PHILO12-O", "section": "O", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "G-204", "profs": ["LAGLIVA, ALBERT M."]},
+          {"id": "PHILO12-Q", "section": "Q", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 105", "profs": ["MIROY, JOVINO G."]},
+        ],
+      },
+      {
+        code: "SocSc 13", title: "The Economy, Society, and Sustainable Development", units: 3, fixed: true,
+        sections: [
+          {"id": "SocSc13-L1", "section": "L1", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "SOM 103", "profs": ["MORA, Rainier Gerald"]},
+        ],
+      },
+      {
+        code: "FAA 111.10", title: "Financial Management for Decision Makers", units: 3, fixed: false,
+        sections: [
+          {"id": "FAA11110-Q", "section": "Q", "days": ["Tue", "Fri"], "start": "18:30", "end": "20:00", "room": "CTC 406", "profs": ["WONG, MARVIC DALE A."]},
+          {"id": "FAA11110-ST2", "section": "ST2", "days": ["Sat"], "start": "08:00", "end": "11:00", "room": "CTC 203", "profs": ["TAN, ELDRIDGE MYLES L."]},
+          {"id": "FAA11110-WX2", "section": "WX2", "days": ["Sat"], "start": "14:00", "end": "17:00", "room": "CTC 408", "profs": ["WONG, MARVIC DALE A."]},
+        ],
+      },
+      {
+        code: "MKTG 111", title: "Marketing Management", units: 3, fixed: false,
+        sections: [
+          {"id": "MKTG111-C", "section": "C", "days": ["Mon", "Thu"], "start": "11:00", "end": "12:30", "room": "SOM 105", "profs": ["GAN, EUNICE APRIL T."]},
+          {"id": "MKTG111-E", "section": "E", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "CTC 304", "profs": ["GAN, EUNICE APRIL T."]},
+          {"id": "MKTG111-GM", "section": "GM", "days": ["Mon"], "start": "17:00", "end": "20:00", "room": "CTC 107", "profs": ["HEMEDES, CARLO LUIS V.", "TANCHINGCO, NORMAN S."]},
+          {"id": "MKTG111-N", "section": "N", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "CTC 404", "profs": ["VALDEZ, Van Christian"]},
+          {"id": "MKTG111-O", "section": "O", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "CTC 404", "profs": ["VALDEZ, Van Christian"]},
+        ],
+      },
+      {
+        code: "OPMAN 125", title: "Intermediate Production and Operations Management", units: 3, fixed: false,
+        sections: [
+          {"id": "OPMAN125-A", "section": "A", "days": ["Mon", "Thu"], "start": "08:00", "end": "09:30", "room": "SOM 106", "profs": ["ASINAS, MARIA CARMEN VICENTA N."]},
+          {"id": "OPMAN125-B", "section": "B", "days": ["Mon", "Thu"], "start": "09:30", "end": "11:00", "room": "SOM 106", "profs": ["ASINAS, MARIA CARMEN VICENTA N."]},
+          {"id": "OPMAN125-D", "section": "D", "days": ["Mon", "Thu"], "start": "12:30", "end": "14:00", "room": "SOM 106", "profs": ["ASINAS, MARIA CARMEN VICENTA N."]},
+          {"id": "OPMAN125-E", "section": "E", "days": ["Mon", "Thu"], "start": "14:00", "end": "15:30", "room": "SOM 106", "profs": ["ASINAS, MARIA CARMEN VICENTA N."]},
+        ],
+      },
+      {
+        code: "QUANT 163", title: "Advanced Operations Research", units: 3, fixed: false,
+        sections: [
+          {"id": "QUANT163-L", "section": "L", "days": ["Tue", "Fri"], "start": "11:00", "end": "12:30", "room": "SOM 204", "profs": ["U, MARIA LOURDES D."]},
+          {"id": "QUANT163-M", "section": "M", "days": ["Tue", "Fri"], "start": "12:30", "end": "14:00", "room": "SOM 204", "profs": ["VILLEGAS, KERISH S."]},
+          {"id": "QUANT163-N", "section": "N", "days": ["Tue", "Fri"], "start": "14:00", "end": "15:30", "room": "SOM 204", "profs": ["U, MARIA LOURDES D."]},
+          {"id": "QUANT163-O", "section": "O", "days": ["Tue", "Fri"], "start": "15:30", "end": "17:00", "room": "SOM 204", "profs": ["U, MARIA LOURDES D."]},
+        ],
+      },
+      {
+        code: "NSTP 12(CWTS)", title: "Civic Welfare Training Service", units: 3, fixed: true,
+        sections: [
+          {"id": "NSTP12CWTS-N-SPM10", "section": "N-SPM10", "days": ["Sat"], "start": "13:00", "end": "17:00", "room": "TBA", "profs": ["SAZON, Keith Xavier"]},
+        ],
+      },
+    ],
+  },
+];
+
+// "STA. MARIA, JOSEPH EMMANUEL D." -> "STA. MARIA"
+export const surnames = (section) =>
+  section.profs.map((p) => p.split(",")[0].trim().toUpperCase());
