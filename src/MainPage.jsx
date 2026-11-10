@@ -14,6 +14,7 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import ContactDeveloper from "./ContactDeveloper";
 import Schedule from "./Schedule";
 import { loadJSON, saveJSON } from "./lib/storage";
 import { saveScheduleImage } from "./lib/screenshot";
@@ -134,6 +135,14 @@ export default function MainPage({ program, onBack }) {
     }
   };
 
+  const contactDeveloper = ({ subject, information, from }) => {
+    const body = [information, from && `From: ${from}`].filter(Boolean).join("\n\n");
+    const params = [];
+    if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+    if (body) params.push(`body=${encodeURIComponent(body)}`);
+    window.location.href = `mailto:dagcabangunay@gmail.com${params.length ? `?${params.join("&")}` : ""}`;
+  };
+
   return (
     <main className="main-page">
       {/* ---------- Left: pick sections ---------- */}
@@ -222,11 +231,14 @@ export default function MainPage({ program, onBack }) {
           Take a screenshot of your schedule
         </button>
 
-        {Object.keys(picks).length > 0 && (
-          <button type="button" className="link-button" onClick={() => setPicks({})}>
-            Clear my picks
-          </button>
-        )}
+        <div className="summary-actions">
+          {Object.keys(picks).length > 0 && (
+            <button type="button" className="link-button" onClick={() => setPicks({})}>
+              Clear my picks
+            </button>
+          )}
+          <ContactDeveloper onSend={contactDeveloper} />
+        </div>
       </section>
     </main>
   );
