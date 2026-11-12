@@ -20,8 +20,10 @@ export const PROGRAMS = [
         ],
       },
       {
-        code: "MATH 192", title: "Undergraduate Research Seminar", units: 1, fixed: false,
-        sections: [], // no slots yet
+        code: "MATH 199.4", title: "Undergraduate Research in Mathematics I (2025)", units: 1, fixed: false,
+        sections: [
+          {"id": "MATH1994-UVA", "section": "UVA", "days": ["Wed"], "start": "08:00", "end": "12:00", "room": "TBA", "profs": ["Chan Shio"], "note": "Tentative schedule"},
+        ],
       },
       {
         code: "MATH 62.2", title: "Time Series and Forecasting", units: 3, fixed: false,
