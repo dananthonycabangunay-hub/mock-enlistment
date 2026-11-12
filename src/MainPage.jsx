@@ -78,7 +78,6 @@ export default function MainPage({ program, onBack }) {
 
   const enrollable = subjects.filter((s) => s.sections.length > 0);
   const filledCount = enrollable.filter((s) => allPicks[s.code]).length;
-  const complete = filledCount === enrollable.length;
   const totalUnits = chosen.reduce((sum, c) => sum + c.subject.units, 0);
 
   const active = subjects.find((s) => s.code === activeCode);
@@ -223,8 +222,6 @@ export default function MainPage({ program, onBack }) {
         <button
           type="button"
           className="shot-btn"
-          disabled={!complete}
-          title={complete ? undefined : "Choose a section for every subject first"}
           onClick={saveImage}
         >
           Take a screenshot of your schedule
